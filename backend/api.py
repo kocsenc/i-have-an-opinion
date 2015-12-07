@@ -1,9 +1,13 @@
 # create our little application :)
+import argparse
 import configparser
 from flask import Flask, request
+import random
 import tweepy
 
 app = Flask(__name__)
+
+dry_run = None
 
 def are_you_the_keymaster():
     config = configparser.ConfigParser()
@@ -20,11 +24,38 @@ def twitter_handler(message):
     #return str(api.verify_credentials())
 
 
+def devnull_handler(message):
+    return ('', 200)
+
+
+def dry_run_handler_wrapper(handler):
+    def dry_run_handler(message):
+        print("Would be using", handler.__name__, "for", message)
+        return ('', 200)
+
+    return dry_run_handler
+
+
+def logging_handler_wrapper(handler):
+    def logging_handler(message):
+        print("Using", handler.__name__, "for", message)
+        return handler(message)
+
+    return logging_handler
+
+
+HANDLERS = (twitter_handler, devnull_handler)
+
 def choose_handler():
-    # TODO: add other handlers
-    def handler(message):
-        print("Sending message", str(message))
-        return twitter_handler
+    global dry_run
+
+    handler = random.choice(HANDLERS)
+
+    if dry_run:
+        handler = dry_run_handler_wrapper(handler)
+    else:
+        handler = logging_handler_wrapper(handler)
+
     return handler
 
 
@@ -52,5 +83,13 @@ def opinionate():
 
 
 if __name__ == '__main__':
-    app.debug = True
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-d', dest='debug', action='store_true', help='Enable debug mode')
+    parser.add_argument('-n', dest='dry', action='store_true', help="Don't make any external requests, just log what would have happened")
+
+    args = parser.parse_args()
+
+    dry_run = args.dry
+
+    app.debug = args.debug
     app.run()
