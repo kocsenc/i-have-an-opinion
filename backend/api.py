@@ -1,13 +1,15 @@
 # create our little application :)
+from flask import Flask, request
+
 import argparse
 import configparser
-from flask import Flask, request
 import random
 import tweepy
 
 app = Flask(__name__)
 
 dry_run = None
+config = None
 
 def are_you_the_keymaster():
     config = configparser.ConfigParser()
@@ -21,7 +23,6 @@ def twitter_handler(message):
     auth.set_access_token(twconf['atok'], twconf['atoksec'])
     api = tweepy.API(auth)
     return str(api.update_status(message))
-    #return str(api.verify_credentials())
 
 
 def devnull_handler(message):
@@ -91,5 +92,11 @@ if __name__ == '__main__':
 
     dry_run = args.dry
 
+    if dry_run:
+        print("Dry run, not making any external requests")
+
     app.debug = args.debug
+
+    config = are_you_the_keymaster()
+
     app.run()
