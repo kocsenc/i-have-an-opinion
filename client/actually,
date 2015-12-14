@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+CURL="curl"
+URL=${URL:-"http://localhost:5000/opinion"}
+
+$CURL -X HEYLISTEN -H 'Content-Type: text/plain' -d @- "$URL"
