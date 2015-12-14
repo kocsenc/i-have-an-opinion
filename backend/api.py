@@ -11,6 +11,7 @@ app = Flask(__name__)
 dry_run = None
 config = None
 
+
 def are_you_the_keymaster():
     config = configparser.ConfigParser()
     config.read('keys.ini')
@@ -46,6 +47,7 @@ def logging_handler_wrapper(handler):
 
 
 HANDLERS = (twitter_handler, devnull_handler)
+
 
 def choose_handler():
     global dry_run
@@ -86,7 +88,8 @@ def opinionate():
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', dest='debug', action='store_true', help='Enable debug mode')
-    parser.add_argument('-n', dest='dry', action='store_true', help="Don't make any external requests, just log what would have happened")
+    parser.add_argument('-n', dest='dry', action='store_true',
+                        help="Don't make any external requests, just log what would have happened")
 
     args = parser.parse_args()
 
@@ -96,7 +99,5 @@ if __name__ == '__main__':
         print("Dry run, not making any external requests")
 
     app.debug = args.debug
-
     config = are_you_the_keymaster()
-
     app.run()
