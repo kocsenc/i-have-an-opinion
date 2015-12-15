@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # create our little application :)
 from flask import Flask, request
 
@@ -22,15 +23,27 @@ def twitter_handler(message):
 
 
 def reddit_handler(message):
-    title = message[:40]
-    subreddit = "SubredditSimulator"
+    """
+    Sadly not working. thanks captchas
+    :param message:
+    :return: 200
+    """
+    # title = message[:40]
+    # subreddit = "reddit_api_test"
+    #
+    # r = praw.Reddit(
+    #     user_agent='Opiniot - Quickly share opinions by /u/opiniot Url: https://github.com/kocsenc/i-have-an-opinion')
+    # r.login('opiniot', 'password', disable_warning=True)
+    # sub_obj = r.get_subreddit(subreddit)
+    #
+    # # res = r.submit(subreddit, title, text=message, raise_captcha_exception=True)
+    # res = r.submit(subreddit, title, text=message)
 
-    r = praw.Reddit(user_agent='Opiniot github.com/kocsenc/i-have-an-opinion')
-    r.login('opiniot', 'password', disable_warning=True)
+    return '', 200
 
 
 def devnull_handler(message):
-    return ('', 200)
+    return '', 200
 
 
 def are_you_the_keymaster():
@@ -42,7 +55,7 @@ def are_you_the_keymaster():
 def dry_run_handler_wrapper(handler):
     def dry_run_handler(message):
         print("Would be using", handler.__name__, "for", message)
-        return ('', 200)
+        return '', 200
 
     return dry_run_handler
 
@@ -55,13 +68,13 @@ def logging_handler_wrapper(handler):
     return logging_handler
 
 
-HANDLERS = (twitter_handler, devnull_handler)
+HANDLERS = (twitter_handler, devnull_handler, reddit_handler)
 
 
 def choose_handler():
     global dry_run
 
-    handler = random.choice(HANDLERS)
+    handler = reddit_handler
 
     if dry_run:
         handler = dry_run_handler_wrapper(handler)
