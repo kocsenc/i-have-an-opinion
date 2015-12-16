@@ -1,0 +1,19 @@
+{
+  "name": "i-have-an-opinion",
+  "description": "Share your opinion, we'll decide where to put it.",
+  "main": "",
+  "moduleType": [],
+  "authors": [
+    "Kocsen & Kevin"
+  ],
+  "license": "MIT",
+  "homepage": "opinion.kocsen.com",
+  "private": true,
+  "dependencies": {
+    "angular": "~1.4.8",
+    "semantic": "semantic-ui#~2.1.6",
+    "animate.css": "animate-css#~3.5.0",
+    "angular-resource": "~1.4.8",
+    "angular-animate": "~1.4.8"
+  }
+}
