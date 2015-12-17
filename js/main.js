@@ -25,6 +25,7 @@ function MainCtrl($resource, $scope, $http) {
 
   vm.loading = false;
   vm.error = false;
+  vm.success = false;
   vm.userOpinion = '';
 
   vm.shareOpinion = function () {
@@ -44,11 +45,12 @@ function MainCtrl($resource, $scope, $http) {
     };
 
     $http(req).then(function (data) {
-      console.log(data);
       vm.loading = false;
+      vm.success = true;
+
     }, function (err) {
-      console.log(err);
       vm.loading = false;
+      vm.success = false;
     });
 
 

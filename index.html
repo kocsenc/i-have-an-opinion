@@ -34,7 +34,7 @@
     </small>
   </div>
   <div class="row animated zoomIn">
-    <div class="ui segment"  ng-class="{'loading': loading}">
+    <div class="ui segment" ng-class="{'loading': loading}">
       <div class="ui three column very relaxed center aligned grid">
         <div class="column">
           <i class="huge violet reddit icon"></i><br>
@@ -76,11 +76,37 @@
         <i class="comment icon"></i>
       </div>
     </form>
-  </div>
 
+  </div>
 </div>
 
-<div class="ui text container" style="padding-top: 7em;">
+<div class="ui text container" style="padding-top: 1em;">
+  <div class="ui info message" ng-show="success">
+    <i class="close icon" ng-click="success = false;"></i>
+
+    <div class="header ">
+      Your opinion has been submitted
+    </div>
+    <p>
+      Think about the following things now that you have expressed your opinion:
+    </p>
+    <ul>
+      <li>Do you know where this will be saved?</li>
+      <li>Did you feel like you had no power to dictate where your information goes?</li>
+      <li>Did you know that you just contributed to the online personality that I (a bot) am constructing?</li>
+      <li>Did you ever think I could access your Facebook login to share it as you on Facebook (I don't).</li>
+    </ul>
+
+    <strong>This could have very well been a status on Facebook or an email that you send out.
+      There is so much data out there it is important to know how easy it is to duplicate everything. Similarly
+      remember that this is a purposefully mysterious black box to make you feel like you have no say where this data
+      goes.</strong>
+
+    <p> Be safe out there!</p>
+  </div>
+</div>
+
+<div class="ui text container" style="padding-top: 5em;">
   <!-- Accordion FAQ -->
   <div class="ui small styled fluid accordion animated fadeInUpBig">
     <div class="title">
