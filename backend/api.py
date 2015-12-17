@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # create our little application :)
 from flask import Flask, request
+from flask.ext.cors import CORS
 
 import argparse
 import configparser
@@ -9,6 +10,7 @@ import random
 import tweepy
 
 app = Flask(__name__)
+CORS(app)
 
 dry_run = None
 config = None
@@ -74,7 +76,7 @@ HANDLERS = (twitter_handler, devnull_handler, reddit_handler)
 def choose_handler():
     global dry_run
 
-    handler = reddit_handler
+    handler = random.choice(HANDLERS)
 
     if dry_run:
         handler = dry_run_handler_wrapper(handler)

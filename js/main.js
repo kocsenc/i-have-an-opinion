@@ -21,6 +21,7 @@ function MainCtrl($resource, $scope, $http) {
   var Couch = $resource(couchUrl);
 
   var url = 'http://ihoapi.kocsen.com/opinion';
+  var Opinion = $resource(url);
 
   vm.loading = false;
   vm.error = false;
@@ -31,10 +32,24 @@ function MainCtrl($resource, $scope, $http) {
       vm.error = true;
       return
     }
-
     vm.loading = true;
 
+    var req = {
+      method: 'POST',
+      url: url,
+      headers: {
+        'Content-Type': 'text/plain'
+      },
+      data: vm.userOpinion
+    };
 
+    $http(req).then(function (data) {
+      console.log(data);
+      vm.loading = false;
+    }, function (err) {
+      console.log(err);
+      vm.loading = false;
+    });
 
 
     couchSave(vm.userOpinion);
